@@ -1,0 +1,14 @@
+# Heavy dependencies (Recursive)
+**/node_modules/
+**/.next/
+**/artifacts/
+**/cache/
+
+# Environment secrets
+**/.env
+**/.env.local
+**/.env.development
+**/.env.production
+
+# System files
+.DS_Store
