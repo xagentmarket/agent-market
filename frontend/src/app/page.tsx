@@ -19,10 +19,12 @@ import BuyModal from "@/components/BuyModal";
 import { useAgents } from "@/hooks/useAgents";
 import { useWeb3 } from "@/context/Web3Provider";
 import { AGENT_ROLES, type Agent } from "@/config/contract";
+import { useRouter } from "next/navigation";
 
 export default function MarketplacePage() {
   const { agents, listedAgents, loading, refresh } = useAgents();
   const { account } = useWeb3();
+  const router = useRouter();
 
   const [mintOpen, setMintOpen] = useState(false);
   const [burnOpen, setBurnOpen] = useState(false);
@@ -147,7 +149,7 @@ export default function MarketplacePage() {
                 bg: "rgba(249,115,22,0.1)",
                 title: "Burn Agent",
                 desc: "Destroy an agent you own and receive a usage-based refund.",
-                onClick: undefined,
+                onClick: () => router.push("/my-agents"),
               },
             ].map((card) => (
               <motion.div
