@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import ContractJSON from "./AgentMarket.json";
 
-export const CONTRACT_ADDRESS = "0xF53e7cD080211b4c38369f2e5f1A0b9401B5470C";
+export const CONTRACT_ADDRESS = "0x38Af6e66e91D0EDbA41aC00e763414e418d0dAC3";
 export const CONTRACT_ABI = ContractJSON.abi;
 export const CHAIN_ID = 196; // X Layer Mainnet
 

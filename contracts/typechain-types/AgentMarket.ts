@@ -73,6 +73,7 @@ export interface AgentMarketInterface extends Interface {
       | "marketOwner"
       | "mintAgent"
       | "mintFee"
+      | "unlistAgent"
       | "useAgent"
       | "withdrawFunds"
   ): FunctionFragment;
@@ -128,6 +129,10 @@ export interface AgentMarketInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "mintFee", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "unlistAgent",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "useAgent",
     values: [BigNumberish]
   ): string;
@@ -159,6 +164,10 @@ export interface AgentMarketInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "mintAgent", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mintFee", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "unlistAgent",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "useAgent", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "withdrawFunds",
@@ -360,6 +369,12 @@ export interface AgentMarket extends BaseContract {
 
   mintFee: TypedContractMethod<[], [bigint], "view">;
 
+  unlistAgent: TypedContractMethod<
+    [agentId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   useAgent: TypedContractMethod<[agentId: BigNumberish], [void], "nonpayable">;
 
   withdrawFunds: TypedContractMethod<[], [void], "nonpayable">;
@@ -439,6 +454,9 @@ export interface AgentMarket extends BaseContract {
   getFunction(
     nameOrSignature: "mintFee"
   ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "unlistAgent"
+  ): TypedContractMethod<[agentId: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "useAgent"
   ): TypedContractMethod<[agentId: BigNumberish], [void], "nonpayable">;

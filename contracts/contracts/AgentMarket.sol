@@ -79,6 +79,18 @@ contract AgentMarket {
         emit AgentListed(agentId, price);
     }
 
+    /// @notice Unlist an agent from the marketplace
+    function unlistAgent(uint256 agentId) external {
+        require(agentExists[agentId], "Agent does not exist");
+        require(agents[agentId].owner == msg.sender, "Not the agent owner");
+        require(agents[agentId].listed, "Agent is not listed for sale");
+
+        agents[agentId].listed = false;
+        agents[agentId].price = 0;
+
+        // Optionally, emit an event here if needed, or rely on state change.
+    }
+
     /// @notice Buy a listed agent
     function buyAgent(uint256 agentId) external payable {
         require(agentExists[agentId], "Agent does not exist");

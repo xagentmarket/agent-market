@@ -53,6 +53,28 @@ export default function ListModal({ isOpen, agent, onClose, onSuccess }: ListMod
         }
     };
 
+    const handleUnlist = async () => {
+        if (!isConnected || !isCorrectChain) return;
+
+        setTxState("pending");
+        setErrorMsg("");
+
+        try {
+            const tx = await contract.unlistAgent(agent.id);
+            setTxState("confirming");
+            await tx.wait();
+            setTxState("success");
+            setTimeout(() => {
+                onSuccess();
+                handleClose();
+            }, 1500);
+        } catch (err: any) {
+            console.error("Unlist failed:", err);
+            setErrorMsg(err?.reason || err?.message || "Transaction failed");
+            setTxState("error");
+        }
+    };
+
     const handleClose = () => {
         setPrice("");
         setTxState("idle");
@@ -89,10 +111,10 @@ export default function ListModal({ isOpen, agent, onClose, onSuccess }: ListMod
                                 </div>
                                 <div>
                                     <h2 className="text-lg font-bold text-[var(--text-primary)]">
-                                        List Agent
+                                        {agent.listed ? "Unlist Agent" : "List Agent"}
                                     </h2>
                                     <p className="text-xs text-[var(--text-secondary)]">
-                                        Sell agent #{agent.id.toString()} on the marketplace
+                                        {agent.listed ? `Remove agent #${agent.id.toString()} from the marketplace` : `Sell agent #${agent.id.toString()} on the marketplace`}
                                     </p>
                                 </div>
                             </div>
@@ -114,10 +136,10 @@ export default function ListModal({ isOpen, agent, onClose, onSuccess }: ListMod
                             >
                                 <CheckCircle2 size={48} className="mx-auto mb-4" color="#10B981" />
                                 <h3 className="text-lg font-bold text-[var(--text-primary)]">
-                                    Agent Listed!
+                                    {agent.listed ? "Agent Unlisted!" : "Agent Listed!"}
                                 </h3>
                                 <p className="text-sm text-[var(--text-secondary)] mt-2">
-                                    Your {agent.role} agent is now on the marketplace.
+                                    {agent.listed ? `Your ${agent.role} agent is no longer on the marketplace.` : `Your ${agent.role} agent is now on the marketplace.`}
                                 </p>
                             </motion.div>
                         ) : (
@@ -145,21 +167,23 @@ export default function ListModal({ isOpen, agent, onClose, onSuccess }: ListMod
                                 </div>
 
                                 {/* Price input */}
-                                <div className="mb-6">
-                                    <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-2 uppercase tracking-wider">
-                                        Listing Price (OKB)
-                                    </label>
-                                    <input
-                                        type="number"
-                                        step="0.001"
-                                        min="0"
-                                        className="input"
-                                        placeholder="0.5"
-                                        value={price}
-                                        onChange={(e) => setPrice(e.target.value)}
-                                        disabled={txState !== "idle"}
-                                    />
-                                </div>
+                                {!agent.listed && (
+                                    <div className="mb-6">
+                                        <label className="block text-xs font-semibold text-[var(--text-secondary)] mb-2 uppercase tracking-wider">
+                                            Listing Price (OKB)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            step="0.001"
+                                            min="0"
+                                            className="input"
+                                            placeholder="0.5"
+                                            value={price}
+                                            onChange={(e) => setPrice(e.target.value)}
+                                            disabled={txState !== "idle"}
+                                        />
+                                    </div>
+                                )}
 
                                 {/* Error */}
                                 {errorMsg && (
@@ -169,23 +193,43 @@ export default function ListModal({ isOpen, agent, onClose, onSuccess }: ListMod
                                 )}
 
                                 {/* Submit */}
-                                <button
-                                    onClick={handleList}
-                                    disabled={txState !== "idle" || !isConnected || !isCorrectChain}
-                                    className="btn-primary w-full flex items-center justify-center gap-2 py-3"
-                                >
-                                    {txState === "pending" || txState === "confirming" ? (
-                                        <>
-                                            <Loader2 size={16} className="animate-spin" />
-                                            {txState === "pending" ? "Confirm in Wallet..." : "Listing..."}
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Tag size={16} />
-                                            List for Sale
-                                        </>
-                                    )}
-                                </button>
+                                {agent.listed ? (
+                                    <button
+                                        onClick={handleUnlist}
+                                        disabled={txState !== "idle" || !isConnected || !isCorrectChain}
+                                        className="btn-danger w-full flex items-center justify-center gap-2 py-3"
+                                    >
+                                        {txState === "pending" || txState === "confirming" ? (
+                                            <>
+                                                <Loader2 size={16} className="animate-spin" />
+                                                {txState === "pending" ? "Confirm in Wallet..." : "Unlisting..."}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <X size={16} />
+                                                Unlist Agent
+                                            </>
+                                        )}
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={handleList}
+                                        disabled={txState !== "idle" || !isConnected || !isCorrectChain}
+                                        className="btn-primary w-full flex items-center justify-center gap-2 py-3"
+                                    >
+                                        {txState === "pending" || txState === "confirming" ? (
+                                            <>
+                                                <Loader2 size={16} className="animate-spin" />
+                                                {txState === "pending" ? "Confirm in Wallet..." : "Listing..."}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Tag size={16} />
+                                                List for Sale
+                                            </>
+                                        )}
+                                    </button>
+                                )}
                             </>
                         )}
                     </motion.div>

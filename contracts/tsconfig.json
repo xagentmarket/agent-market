@@ -5,8 +5,19 @@
     "strict": true,
     "esModuleInterop": true,
     "outDir": "dist",
+    "rootDir": ".",
     "resolveJsonModule": true
   },
-  "include": ["./scripts", "./test", "./typechain-types"],
-  "files": ["./hardhat.config.ts"]
+  "ts-node": {
+    "transpileOnly": true
+  },
+  "include": [
+    "./scripts",
+    "./test",
+    "./typechain-types",
+    "./contracts"
+  ],
+  "files": [
+    "./hardhat.config.ts"
+  ]
 }
