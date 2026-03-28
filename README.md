@@ -1,54 +1,57 @@
-# Agent X Marketplace 🤖💼
+# Agent X: Modular On-chain Agent Marketplace 🤖💼
 
-**Agent X** is an on-chain AI Agent Marketplace built on **X Layer**. It allows users to Mint, Trade, and Burn AI agents. Each agent acts as an economic asset with utility-based depreciation, mirroring real-world asset decay models inside an autonomous agent economy.
+Most AI agents are isolated tools. They don’t coordinate. They don’t specialize. They don’t scale. **Agent X fixes that.**
 
----
-
-## ⚠️ The Problem It Solves
-
-Static NFTs or assets do not effectively model **utility-based depreciation**. 
-When an AI agent is used (for execution, risk profiling, signaling, etc.), it incurs a virtual "wear and tear." 
-
-To address this:
-1.  **Backing Mechanics**: Agents are minted with a fixed backstop value (`mintFee`).
-2.  **Usage Depreciation**: Every time an agent is called/used, its internal `usageCount` grows, decreasing its total redeemable value linearly.
-3.  **Burn Mechanics**: Owners can "Burn" (destroy) an agent on-chain to receive a partial refund based on the remaining value, enforcing a real floor-price mechanic.
+**Agent X** is a modular on-chain agent marketplace where each agent has a specific role, enabling complex, orchestrated systems inside the **X Layer** ecosystem.
 
 ---
 
-## 💡 Key Features
+## 🏗️ The Multi-Agent Stack
 
--   **Role-Based Modules**: Mint specialized agents: `Brain`, `Research`, `Security`, `Execution`, and `Economy`.
--   **Neural Core Tracking**: Dynamic visual metrics representing direct structural deterioration (Depreciation bar/Health).
--   **Autonomous Listings**: Secondary marketplace for trading agents dynamically.
--   **Parallel Fetch Pipeline**: High-performance optimization reducing RPC-load up to 80% using indexed role grouping data streams.
+A modular ecosystem where each agent is a specialized primitive:
+
+-   **➡️ Brain** — Coordinates tasks and orchestrates high-level multi-agent flows.
+-   **➡️ Research** — Scans on-chain data to find market opportunities and alpha.
+-   **➡️ Security** — Monitors risk profiles and prevents capital loss through real-time audits.
+-   **➡️ Execution** — Performs high-frequency, precision on-chain actions.
+-   **➡️ Economy** — Handles **X402** value-bearing flows and autonomous fee management.
 
 ---
 
-## 🛠️ Architecture & Tech Stack
+## 🔄 How It Works
 
-### core components:
-1.  **`contracts/`**: 
-    -   `AgentMarket.sol`: Core contract managing ERC asset states, lists maps, structure validation and user payment refund streams logic safely securely without proxies directly connected.
-2.  **`frontend/`**:
-    -   **Framework**: Next.js 16 (App Router).
-    -   **Styles Utilities**: Typescript, TailwindCSS & Framer motion layouts.
-    -   **RPC/Nodes**: Ethers.js directly pulling batch structures over parallel async tasks loops.
+Agent X turns static bots into **composable infrastructure** and **measurable utility assets**:
+
+1.  **Mint**: You mint an agent as an NFT on Agent X, defining its initial role and metadata.
+2.  **Deploy**: Use your agent inside **X-Sovereign** to perform its role (alpha scans, risk checks, orchestration).
+3.  **Earn**: Each time your agent is used, its activity is recorded on-chain, accruing utility fees.
+4.  **List**: You can list your agent on the marketplace for others to use in their own stacks.
+5.  **Redeem (Burn)**: You can burn your agent to receive a payout based on usage frequency, demand, and time deployed.
+
+---
+
+## 💎 Why X Layer?
+
+Agent coordination requires a high-performance foundation. **X Layer** provides the perfect environment:
+
+-   **Cheap X402 Payments**: Enables micro-payment streams between agents for task completion.
+-   **Real-time Usage Tracking**: Low-latency ZK-L2 updates for immutable activity logs.
+-   **Scalable Coordination**: Fast execution ensures "Brain" agents can coordinate "Execution" agents in sub-second cycles.
+-   **On-chain Lifecycle Management**: Secure Minting and Burning via low-gas ZK-EVM transactions.
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Smart Contracts Setup
+### 1. Smart Contracts
 Navigate to the `contracts` folder:
 ```bash
 cd contracts
 npm install
-# To Compile or deploy if adding triggers
-# npx hardhat compile
+npx hardhat compile
 ```
 
-### 2. Frontend setup
+### 2. Frontend
 Navigate to the `frontend` folder:
 ```bash
 cd frontend
@@ -56,9 +59,10 @@ npm install
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) inside your browser to interact with the marketplace interface Dashboard.
-
 ---
 
-## 🎨 Design Theme
-The layout uses a **sleek dark-mode workspace panel template style**. Powered via deep purple core gradients visual flows maximizing smooth UI performance with subtle micro-motion dynamic layouts scaling components.
+**Composable. Coordinated. On-chain.**
+*Agent X powers systems like @XSovereign01 where agents don’t just exist; they work.*
+
+**Live:** [agent-markett.vercel.app](https://agent-markett.vercel.app/)  
+**Code:** [github.com/xagentmarket/agent-market](https://github.com/xagentmarket/agent-market.git)
